@@ -409,12 +409,24 @@ async function loadContractData() {
         // Обновляем историю голосов
         votesList.innerHTML = "";
         for (let i = 0; i < voterCount; i++) {
-            const [voter, voteValue, hasVoted] = await contract.getVoterAtIndex(i);
-            if (hasVoted) {
-                const li = document.createElement("li");
-                const voteText = voteValue === 2 ? "За" : (voteValue === 1 ? "Против" : "Неизвестно");
-                li.textContent = `${voter}: ${voteText}`;
-                votesList.appendChild(li);
+            try {
+                // Вызываем функцию getVoterAtIndex
+                const [voter, voteValue, hasVoted] = await contract.getVoterAtIndex(i);
+                // Проверяем, что пользователь действительно проголосовал
+                if (hasVoted) {
+                    const li = document.createElement("li");
+                    let voteText = "Неизвестно";
+                    if (voteValue === 2) {
+                        voteText = "За";
+                    } else if (voteValue === 1) {
+                        voteText = "Против";
+                    }
+                    li.textContent = `${voter}: ${voteText}`;
+                    votesList.appendChild(li);
+                }
+            } catch (err) {
+                console.error(`Ошибка при получении голоса для индекса ${i}:`, err);
+                // Пропускаем этот элемент, если произошла ошибка
             }
         }
 
