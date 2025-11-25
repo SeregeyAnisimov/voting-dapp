@@ -379,6 +379,7 @@ async function checkOwner() {
 }
 
 // --- Загрузка данных с контракта ---
+// --- Загрузка данных с контракта ---
 async function loadContractData() {
     if (!contract) return;
 
@@ -390,15 +391,20 @@ async function loadContractData() {
 
         voteQuestionEl.textContent = question;
         statusEl.textContent = status;
-        countForEl.textContent = votesFor.toString();
-        countAgainstEl.textContent = votesAgainst.toString();
-        voterCountEl.textContent = voterCount.toString();
+        // Явное преобразование BigInt в строку, а затем в число для отображения
+        countForEl.textContent = Number(votesFor).toString();
+        countAgainstEl.textContent = Number(votesAgainst).toString();
+        voterCountEl.textContent = Number(voterCount).toString();
 
         // Обновляем прогресс-бар
-        const totalVotes = votesFor + votesAgainst;
+        // Преобразуем BigInt в number для расчета
+        const votesForNum = Number(votesFor);
+        const votesAgainstNum = Number(votesAgainst);
+        const totalVotes = votesForNum + votesAgainstNum;
+
         if (totalVotes > 0) {
-            const percentFor = (votesFor / totalVotes) * 100;
-            const percentAgainst = (votesAgainst / totalVotes) * 100;
+            const percentFor = (votesForNum / totalVotes) * 100;
+            const percentAgainst = (votesAgainstNum / totalVotes) * 100;
             progressFor.style.width = `${percentFor}%`;
             progressAgainst.style.width = `${percentAgainst}%`;
         } else {
@@ -410,15 +416,13 @@ async function loadContractData() {
         votesList.innerHTML = "";
         for (let i = 0; i < voterCount; i++) {
             try {
-                // Вызываем функцию getVoterAtIndex
                 const [voter, voteValue, hasVoted] = await contract.getVoterAtIndex(i);
-                // Проверяем, что пользователь действительно проголосовал
                 if (hasVoted) {
                     const li = document.createElement("li");
                     let voteText = "Неизвестно";
-                    if (voteValue === 2) {
+                    if (voteValue === 2n) { // Используем '2n' для сравнения с BigInt
                         voteText = "За";
-                    } else if (voteValue === 1) {
+                    } else if (voteValue === 1n) { // Используем '1n' для сравнения с BigInt
                         voteText = "Против";
                     }
                     li.textContent = `${voter}: ${voteText}`;
@@ -426,7 +430,6 @@ async function loadContractData() {
                 }
             } catch (err) {
                 console.error(`Ошибка при получении голоса для индекса ${i}:`, err);
-                // Пропускаем этот элемент, если произошла ошибка
             }
         }
 
