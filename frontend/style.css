@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f7f7f7;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px; /* Шире для размещения прогресса */
+    text-align: center;
+}
+
+button {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background: #0051cc;
+}
+
+button:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.voting-buttons {
+    margin: 1rem 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+    display: flex; /* Для размещения двух прогрессов */
+}
+
+.progress-fill {
+    height: 100%;
+    min-width: 0%; /* Позволяет уменьшаться до 0 */
+    transition: width 0.5s ease;
+}
+
+.progress-for {
+    background: #4caf50; /* Зелёный для "За" */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.progress-against {
+    background: #f44336; /* Красный для "Против" */
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.results {
+    display: flex;
+    justify-content: space-around;
+    margin: 1rem 0;
+}
+
+.results p {
+    margin: 0.5rem 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    text-align: left;
+    margin-top: 1rem;
+}
+
+li {
+    padding: 0.25rem;
+    border-bottom: 1px solid #eee;
+}

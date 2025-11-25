@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting dApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="voteQuestion">Загрузка вопроса...</h1>
+        <p><strong>Статус голосования:</strong> <span id="status">Проверка...</span></p>
+        <p><strong>Проголосовавших:</strong> <span id="voterCount">0</span></p>
+
+        <div class="results">
+            <p><strong>За:</strong> <span id="countFor">0</span></p>
+            <p><strong>Против:</strong> <span id="countAgainst">0</span></p>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progressFor" class="progress-fill progress-for"></div>
+            <div id="progressAgainst" class="progress-fill progress-against"></div>
+        </div>
+
+        <button id="connectBtn">Подключить MetaMask</button>
+
+        <div class="voting-buttons" id="votingButtons" style="display: none;">
+            <button id="voteForBtn">Проголосовать ЗА</button>
+            <button id="voteAgainstBtn">Проголосовать ПРОТИВ</button>
+            <button id="finishVotingBtn">Завершить голосование (только владелец)</button>
+        </div>
+
+        <h3>История голосов:</h3>
+        <ul id="votesList"></ul>
+    </div>
+
+    <!-- ethers.js v6 UMD-бандл -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
